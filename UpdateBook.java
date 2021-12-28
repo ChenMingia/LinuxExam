@@ -1,4 +1,5 @@
 import java.io.*;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import com.google.gson.*;
@@ -15,7 +16,7 @@ public class UpdateBook extends HttpServlet {
    final static String URL = "jdbc:mysql://123.60.47.94/linux_final";
    final static String USER = "root";
    final static String PASS = "09010914Chen@";
-   final static String SQL_UPDATE_BOOK = "UPDATE t_book SET name = ?,author = ? WHERE id=?";
+   final static String SQL_UPDATE_BOOK = "UPDATE t_book SET name = ? , author = ? WHERE id=?";
 
    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       response.setContentType("application/json");
@@ -30,16 +31,16 @@ public class UpdateBook extends HttpServlet {
    }
 
    private Book getRequestBody(HttpServletRequest request) throws IOException {
-      Book note = new Book();
+      Book stu = new Book();
       StringBuffer bodyJ = new StringBuffer();
       String line = null;
       BufferedReader reader = request.getReader();
       while ((line = reader.readLine()) != null)
  	bodyJ.append(line);
       Gson gson = new Gson();
-      note = gson.fromJson(bodyJ.toString(), new TypeToken<Book>() {
+      stu = gson.fromJson(bodyJ.toString(), new TypeToken<Book>() {
       }.getType());
-      return note;
+      return stu;
    }
 
    private int updateBook(Book req) {
@@ -71,7 +72,7 @@ public class UpdateBook extends HttpServlet {
                stmt.close();
             if (conn != null)
                conn.close();
-  } catch (SQLException se) {
+  	} catch (SQLException se) {
             se.printStackTrace();
          }
       }
@@ -107,5 +108,4 @@ public class Book {
  }
 }
 }
-
-                      
+                     
