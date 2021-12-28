@@ -15,7 +15,7 @@ public class UpdateBook extends HttpServlet {
    final static String URL = "jdbc:mysql://123.60.47.94/linux_final";
    final static String USER = "root";
    final static String PASS = "09010914Chen@";
-   final static String SQL_UPDATE_BOOK = "UPDATE t_book SET id= ?,name = ?,author = ? WHERE id=?";
+   final static String SQL_UPDATE_BOOK = "UPDATE t_book SET name = ?,author = ? WHERE id=?";
 
    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       response.setContentType("application/json");
@@ -35,7 +35,7 @@ public class UpdateBook extends HttpServlet {
       String line = null;
       BufferedReader reader = request.getReader();
       while ((line = reader.readLine()) != null)
- bodyJ.append(line);
+ 	bodyJ.append(line);
       Gson gson = new Gson();
       note = gson.fromJson(bodyJ.toString(), new TypeToken<Book>() {
       }.getType());
@@ -51,9 +51,9 @@ public class UpdateBook extends HttpServlet {
          conn = DriverManager.getConnection(URL, USER, PASS);
          stmt = conn.prepareStatement(SQL_UPDATE_BOOK);
 
-         stmt.setInt(1,req.id);
-         stmt.setString(2, req.name);
-         stmt.setString(3, req.author);
+         stmt.setString(1, req.name);
+         stmt.setString(2, req.author);
+	 stmt.setInt(3,req.id);
 
          int row = stmt.executeUpdate();
          if (row > 0)
